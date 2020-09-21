@@ -1,0 +1,176 @@
+* 1. some beginning flights
+FLIGHT S1 SAT IAH 600 30 0
+FLIGHT S3 SAT ATL 1000 150 1
+FLIGHT S2 SAT MCO 800 150 1
+FLIGHT H1 IAH SAT 1200 40 0
+FLIGHT H2 IAH ATL 300 140 1 
+FLIGHT H5 IAH PHX 1500 120 -1
+FLIGHT H3 IAH MCO 1400 130 1
+FLIGHT H4 IAH LAX 1300 200 -2
+FLIGHT P1 PHX DEN 700 40 0
+FLIGHT P2 PHX IAH 800 110 1
+FLIGHT P3 PHX LAX 900 90 -1
+* 2. print those flights by origin and then by dest
+PRTFLIGHTBYORIGIN
+PRTFLIGHTBYDEST
+*
+* 3. SAT should have one predecessor and 3 successors
+*
+PRTONE SAT
+*
+* 4. IAH should have 2 predecessors and 5 successors
+* 
+PRTALL
+*
+* 5. Since we have very few flights, the successor indented output is short
+*    Ignoring time, the longest paths: S1-IAH to H5-PHX to either P3-LAX or P1-DEN
+*
+PRTSUCC SAT
+*
+* 6. Considering time, shorter paths
+* 
+PRTCHRON SAT
+PRTALTS SAT MCO
+MAXSTEPS SAT MCO
+*
+* 7. more flights
+*
+FLIGHT P4 PHX MCO 1000 220 2
+FLIGHT P5 PHX ATL 1100 200 2
+FLIGHT A1 ATL MCO 1500 50 0
+FLIGHT A2 ATL IAH 800 140 -1
+FLIGHT A3 ATL PHX 1300 210 -2
+FLIGHT A4 ATL RIC 1900 50 0
+FLIGHT A5 ATL IAH 1800 140 -1
+FLIGHT R1 RIC ATL 900 50 0
+*
+* 8. show the flights
+* 
+PRTFLIGHTBYORIGIN
+PRTFLIGHTBYDEST
+*
+* 9. lots of successors without considering time, longest have 4 flights
+*
+PRTSUCC SAT
+*
+* 10. Considering time, the longest paths are two flights
+* 
+PRTCHRON SAT
+PRTALTS SAT MCO
+MAXSTEPS SAT MCO
+*
+* 11. more flights 
+* 
+FLIGHT M1 MCO ATL 1300 50 0
+FLIGHT M2 MCO IAH 900 120 -1
+FLIGHT M3 MCO FLL 1800 30 0
+FLIGHT H6 IAH FLL 1200 120 1
+FLIGHT F1 FLL MCO 600 30 0
+FLIGHT F2 FLL IAH 2000 120 -1
+FLIGHT L1 LAX PHX 600 90 1
+FLIGHT L2 LAX IAH 1600 200 2
+FLIGHT L3 LAX MCO 1000 250 3
+FLIGHT D1 DEN PHX 900 40 0
+FLIGHT D2 DEN IAH 1800 80 1
+FLIGHT M4 MCO SAT 1200 200 -1
+FLIGHT S4 SAT FLL 1400 200 1
+FLIGHT H7 IAH DEN 1000 90 -1
+FLIGHT H8 IAH ATL 600 140 1
+*
+* 12. print many flights by origin
+*
+PRTFLIGHTBYORIGIN
+*
+* 13. SAT has 2 pred and 4 successors
+*     IAH has 8 pred and 8 successors
+*     ATL has 6 pred and 5 successors
+*     FLL has 3 pred and 2 successors
+*
+PRTONE SAT 
+PRTALL
+*
+* 14. Considering time, longest path is SAT to ATL to MCO to FLL to IAH
+*
+PRTCHRON SAT
+*
+* 15. Max path from SAT to FLL is 3 steps
+*
+PRTALTS SAT FLL 
+MAXSTEPS SAT FLL
+*
+* 16. Add another flight from SAT to PHX
+* 
+FLIGHT S5 SAT PHX 500 110 -1
+PRTALL
+*
+* 17. Considering time, max path from SAT to FLL is 4 steps
+*
+PRTCHRON SAT
+MAXSTEPS SAT FLL
+*
+* 18. Considering time, there are 9 paths from SAT to FLL
+*
+PRTALTS SAT FLL
+MAXSTEPS SAT FLL
+*
+* 19-1. Before deleting LAX, show all 
+*
+PRTALL
+*
+* 19-2.DELETE LAX. This also removes flights H4, P3, L1, L2, L3
+*       IAH - 7 pred (removed L2), 7 succ (removed H4)
+*       MCO - 5 pred (removed L3), 4 succ
+*       PHX - 4 pred (removed L1), 4 succ (removed P3)  
+*       LAX should not exist
+DELETE LAX
+PRTALL
+*
+* 19-3. Since LAX is deleted, these should show a WARNING and not terminate
+*
+PRTONE LAX
+PRTSUCC LAX
+PRTCHRON LAX
+PRTALTS LAX MCO
+MAXSTEPS LAX MCO
+DELETE LAX
+*
+* 20. DELETE RIC. This also removes flights A4 and R1
+*
+DELETE RIC
+PRTALL
+*
+* 21. Insert D3.  If not doing hashing: 
+*       - LFL will be the last airport in vertexM
+*       - We won't use the empty one until we run out of
+*       - entries.  
+*     If hashing, LFL will be at subscript 6.
+*
+FLIGHT D3 DEN LFL 800 200 2
+PRTALL
+*
+* 22. Insert X1 which will insert airport LAX again.
+*
+FLIGHT X1 LAX SAT 1200 300 2
+PRTALL
+*
+* 23. Due to previous deletion of LAX, considering time, there are no paths from LAX to IAH 
+*
+PRTCHRON LAX
+PRTALTS LAX IAH
+MAXSTEPS LAX IAH
+*
+* 24. Add the LAX flights
+*
+FLIGHT L1 LAX PHX 600 90 1
+FLIGHT L2 LAX IAH 1600 200 2
+FLIGHT L3 LAX MCO 1000 250 3
+*
+* 25. LAX should have 0 predecessors and 4 successors
+*
+PRTALL
+*
+* 26. With LAX added, considering time, there are 4 paths from LAX to IAH 
+*
+PRTCHRON LAX
+PRTALTS LAX IAH
+MAXSTEPS LAX IAH

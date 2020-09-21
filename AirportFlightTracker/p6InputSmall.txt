@@ -1,0 +1,103 @@
+* 1. some beginning flights
+FLIGHT S1 SAT IAH 600 30 0
+FLIGHT S2 SAT MCO 800 150 1
+FLIGHT S3 SAT ATL 1000 150 1
+FLIGHT H2 IAH ATL 300 140 1 
+FLIGHT H3 IAH MCO 1400 130 1
+FLIGHT M3 MCO FLL 1800 30 0
+* 2. print those flights by origin and then by dest
+PRTFLIGHTBYORIGIN
+PRTFLIGHTBYDEST
+*
+* 3. SAT should have no predecessors and 3 successors
+*
+PRTONE SAT
+*
+* 4. IAH should have 1 predecessor and 2 successors
+* 
+PRTALL
+*
+* 5. Since we have very few flights, the successor indented output is short
+*    Ignoring time, the longest path: S1-IAH to H3-MCO to M3-FLL
+*
+PRTSUCC SAT
+*
+* 6. Considering time, fewer paths
+* 
+PRTCHRON SAT
+PRTALTS SAT FLL
+MAXSTEPS SAT FLL
+*
+* 7. more flights
+*
+FLIGHT P4 PHX MCO 1000 220 2
+FLIGHT P5 PHX ATL 1100 200 2
+FLIGHT A1 ATL MCO 1500 50 0
+FLIGHT A2 ATL IAH 800 140 -1
+FLIGHT A3 ATL PHX 1300 210 -2
+FLIGHT A4 ATL RIC 1900 50 0
+FLIGHT A5 ATL IAH 1800 140 -1
+FLIGHT R1 RIC ATL 900 50 0
+*
+* 8. show the flights
+* 
+PRTFLIGHTBYORIGIN
+PRTFLIGHTBYDEST
+*
+* 9. lots of successors without considering time, longest have 5 flights
+*
+PRTSUCC SAT
+*
+* 10. Considering time, the longest paths are three flights
+* 
+PRTCHRON SAT
+PRTALTS SAT FLL
+MAXSTEPS SAT FLL
+*
+* 11. more flights 
+* 
+FLIGHT M1 MCO ATL 1300 50 0
+FLIGHT M2 MCO IAH 900 120 -1
+FLIGHT H6 IAH FLL 1200 120 1
+FLIGHT H9 IAH FLL 2000 120 1
+FLIGHT F1 FLL MCO 600 30 0
+FLIGHT F2 FLL IAH 2000 120 -1
+FLIGHT L1 LAX PHX 600 90 1
+FLIGHT L2 LAX IAH 1600 200 2
+FLIGHT L3 LAX MCO 1000 250 3
+FLIGHT D1 DEN PHX 900 40 0
+FLIGHT D2 DEN IAH 1800 80 1
+FLIGHT M4 MCO SAT 1200 200 -1
+FLIGHT S4 SAT FLL 1400 200 1
+FLIGHT H7 IAH DEN 1000 90 -1
+FLIGHT H8 IAH ATL 600 140 1
+*
+* 12. print many flights by origin
+*
+PRTFLIGHTBYORIGIN
+*
+* 13. SAT has 1 pred and 4 successors
+*     IAH has 7 pred and 6 successors
+*     ATL has 6 pred and 5 successors
+*     FLL has 4 pred and 2 successors
+*
+PRTONE SAT 
+PRTALL
+*
+* 14. Considering time, longest paths are
+*        - SAT to MCO to ATL to IAH to FLL
+*        - SAT to ATL to MCO to FLL to IAH
+*
+PRTCHRON SAT
+*
+* 15. Add another flight from SAT to PHX
+* 
+FLIGHT S5 SAT PHX 500 110 -1
+PRTALL
+*
+* 16. Considering time, several max path (e.g., SAT to FLL is 4 steps)
+*
+PRTCHRON SAT FLL
+PRTALTS SAT FLL
+MAXSTEPS SAT FLL 
+
